@@ -16,17 +16,4 @@ COPY . .
 RUN mv .env.example .env
 
 # Build the client for production
-RUN npm run build
-
-
-FROM nginx:alpine
-# Copy the build artifacts from the build stage
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-# NGINX default configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expose port 8080
-EXPOSE 8080
-
-CMD ["nginx", "-g", "daemon off;"]
-
+CMD [ "npm", "run", "dev" ]
