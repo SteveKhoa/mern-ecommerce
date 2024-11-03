@@ -8,6 +8,11 @@ services:
       - '8080:8080'
     networks:
       - app-network
+    volumes:
+      - /usr/src/app/node_modules
+      - type: bind
+        source: client
+        target: /usr/src/app
 
   server:
     build: server
@@ -38,7 +43,18 @@ services:
       - '27017:27017'
     networks:
       - app-network
+    volumes:
+      - /usr/src/app/node_modules
+      - mongodata:/data/db
+      - mongoconfig:/data/configdb
+      - type: bind
+        source: server
+        target: /usr/src/app
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  mongodata:
+  mongoconfig:
