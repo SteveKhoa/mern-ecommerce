@@ -28,12 +28,17 @@ services:
     command: [
         'sh',
         '-c',
-        'npm run seed:db admin@example.com admin123 && npm start'
+        'npm run seed:db:organic admin@example.com admin123 && npm start dev'
       ] # Default email and password arguments to database seed script - update your admin email and password
     depends_on:
       - mongo
     networks:
       - app-network
+    volumes:
+      - /usr/src/app/node_modules
+      - type: bind
+        source: server
+        target: /usr/src/app
 
   mongo:
     image: mongo:latest
