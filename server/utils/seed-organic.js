@@ -15,8 +15,6 @@ const vegetablesjson = require("../data/vegetables.json");
 const brandsjson = require("../data/brands.json");
 
 const args = process.argv.slice(2);
-const email = args[0];
-const password = args[1];
 
 const NUM_PRODUCTS = 100;
 const NUM_BRANDS = 10;
@@ -28,25 +26,50 @@ const seedDB = async (vegetablesjson) => {
 
     console.log(`${chalk.blue('✓')} ${chalk.blue('Seed database started')}`);
 
-    if (!email || !password) throw new Error('Missing arguments');
-    const existingUser = await User.findOne({ email });
-    if (!existingUser) {
-      console.log(`${chalk.yellow('!')} ${chalk.yellow('Seeding admin user...')}`);
-      const user = new User({
-        email,
-        password,
-        firstName: 'admin',
-        lastName: 'admin',
+    const mockUsers = [
+      {
+        email: "admin@admin.com",
+        password: "admin",
+        firstName: "admin",
+        lastName: "admin",
         role: ROLES.Admin
-      });
+      },
+      {
+        email: "merchant@merchant.com",
+        password: "merchant",
+        firstName: "merchant",
+        lastName: "merchant",
+        role: ROLES.Merchant
+      },
+      {
+        email: "member@member.com",
+        password: "member",
+        firstName: "member",
+        lastName: "member",
+        role: ROLES.Member
+      }
+    ]
+    for (const user_ of mockUsers) {
+      const email = user_.email
+      const existingUser = await User.findOne({ email });
+      if (!existingUser) {
+        console.log(`${chalk.yellow('!')} ${chalk.yellow('Seeding admin user...')}`);
+        const user = new User({
+          email: user_.email,
+          password: user_.password,
+          firstName: user_.firstName,
+          lastName: user_.lastName,
+          role: user_.role
+        });
 
-      const salt = await bcrypt.genSalt(10);
-      const hash = await bcrypt.hash(user.password, salt);
-      user.password = hash;
-      await user.save();
-      console.log(`${chalk.green('✓')} ${chalk.green('Admin user seeded.')}`);
-    } else {
-      console.log(`${chalk.yellow('!')} ${chalk.yellow('Admin user already exists, skipping seeding for admin user.')}`);
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(user.password, salt);
+        user.password = hash;
+        await user.save();
+        console.log(`${chalk.green('✓')} ${chalk.green('Admin user seeded.')}`);
+      } else {
+        console.log(`${chalk.yellow('!')} ${chalk.yellow('Admin user already exists, skipping seeding for admin user.')}`);
+      }
     }
 
     const categoriesCount = await Category.countDocuments();
