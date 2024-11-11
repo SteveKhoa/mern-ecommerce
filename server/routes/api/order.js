@@ -6,6 +6,7 @@ const Mongoose = require('mongoose');
 const Order = require('../../models/order');
 const Cart = require('../../models/cart');
 const Product = require('../../models/product');
+const Address = require('../../models/address');
 const auth = require('../../middleware/auth');
 const mailgun = require('../../services/mailgun');
 const store = require('../../utils/store');
@@ -17,10 +18,30 @@ router.post('/add', auth, async (req, res) => {
     const total = req.body.total;
     const user = req.user._id;
 
+    const addresses = await Address.find({
+      user: user
+    })
+
+    const defaultAddresses = addresses.filter((address, index) => address.isDefault)
+    let address = null;
+    if (defaultAddresses.length > 0) {
+      address = defaultAddresses[0];
+    } else if (addresses.length > 0) {
+      const nondefaultAddress = addresses[0]
+      address = nondefaultAddress;
+    } else {
+      address = null;
+    }
+
+    if (address == null) {
+      throw new ReferenceError();
+    }
+
     const order = new Order({
       cart,
       user,
-      total
+      total,
+      address: address._id
     });
 
     const orderDoc = await order.save();
@@ -45,11 +66,17 @@ router.post('/add', auth, async (req, res) => {
     res.status(200).json({
       success: true,
       message: `Your order has been placed successfully!`,
-      order: { _id: orderDoc._id }
+      order: { _id: orderDoc._id, address: address }, 
+      hehe: addresses
     });
   } catch (error) {
+    let errResponse = 'Your request could not be processed. Please try again.'
+    if (error instanceof ReferenceError) {
+      errResponse = "You has no delivery address available.\nPlease add an address first.";
+    }
+    console.log(error)
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: errResponse
     });
   }
 });
@@ -207,6 +234,7 @@ router.get('/:orderId', auth, async (req, res) => {
     if (req.user.role === ROLES.Admin) {
       orderDoc = await Order.findOne({ _id: orderId }).populate({
         path: 'cart',
+        path: 'address',
         populate: {
           path: 'products.product',
           populate: {
@@ -218,6 +246,7 @@ router.get('/:orderId', auth, async (req, res) => {
       const user = req.user._id;
       orderDoc = await Order.findOne({ _id: orderId, user }).populate({
         path: 'cart',
+        path: 'address',
         populate: {
           path: 'products.product',
           populate: {
@@ -239,7 +268,8 @@ router.get('/:orderId', auth, async (req, res) => {
       created: orderDoc.created,
       totalTax: 0,
       products: orderDoc?.cart?.products,
-      cartId: orderDoc.cart._id
+      cartId: orderDoc.cart._id,
+      address: orderDoc.address
     };
 
     order = store.caculateTaxAmount(order);
