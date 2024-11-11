@@ -12,6 +12,7 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 
 const vegetablesjson = require("../data/vegetables.json");
+const brandsjson = require("../data/brands.json");
 
 const args = process.argv.slice(2);
 const email = args[0];
@@ -53,14 +54,20 @@ const seedDB = async (vegetablesjson) => {
       console.log(`${chalk.yellow('!')} ${chalk.yellow('Sufficient number of categories already exist, skipping seeding for categories.')}`);
       categories = await Category.find().select('_id');
     } else {
-      for (let i = 0; i < NUM_CATEGORIES; i++) {
-        const category = new Category({
-          name: faker.commerce.department(),
-          description: faker.lorem.sentence(),
-          isActive: true
-        });
-        await category.save();
-        categories.push(category);
+      const vegetables = vegetablesjson.vegetables;
+      for (const vegetable of vegetables) {
+        const category_ = vegetable.category;
+        const count = await Category.countDocuments({ name: category_ });
+
+        if (count <= 0) {
+          const category = new Category({
+            name: category_,
+            description: faker.lorem.sentence(),
+            isActive: true
+          });
+          await category.save();
+          categories.push(category);
+        }
       }
       console.log(`${chalk.green('✓')} ${chalk.green('Categories seeded.')}`);
     }
@@ -69,19 +76,21 @@ const seedDB = async (vegetablesjson) => {
     if (brandsCount >= NUM_BRANDS) {
       console.log(`${chalk.yellow('!')} ${chalk.yellow('Sufficient number of brands already exist, skipping seeding for brands.')}`);
     } else {
-      for (let i = 0; i < NUM_BRANDS; i++) {
+      const brands = brandsjson.brands;
+      for (const brand_ of brands) {
         const brand = new Brand({
-          name: faker.company.name(),
-          description: faker.lorem.sentence(),
+          name: brand_.title,
+          description: brand_.description,
+          image: brand_.img,
           isActive: true
         });
-        await brand.save();
+        await brand.save();  
       }
       console.log(`${chalk.green('✓')} ${chalk.green('Brands seeded.')}`);
     }
 
     const productsCount = await Product.countDocuments();
-    if (false && productsCount >= NUM_PRODUCTS) {
+    if (productsCount >= NUM_PRODUCTS) {
       console.log(`${chalk.yellow('!')} ${chalk.yellow('Sufficient number of products already exist, skipping seeding for products.')}`);
     } else if (true) {
       const vegetables = vegetablesjson.vegetables;
