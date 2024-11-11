@@ -36,7 +36,7 @@ class OrderSuccess extends React.PureComponent {
           <LoadingIndicator />
         ) : order._id ? (
           <div className='order-message'>
-            <h2>Thank you for your order.</h2>
+            <h2>Thank you for your order. 🎉</h2>
             <p>
               Order{' '}
               <Link
@@ -51,7 +51,7 @@ class OrderSuccess extends React.PureComponent {
               </Link>{' '}
               is complete.
             </p>
-            <p>A confirmation email will be sent to you shortly.</p>
+            <p>The product will be sent to <p className='order-label'>{String(order.address.address).concat(", ").concat(order.address.city).concat(", ").concat(order.address.country).concat(", ").concat(order.address.zipCode)}<p>within 3 hours!</p></p></p>
             <div className='order-success-actions'>
               <Link to='/dashboard/orders' className='btn-link'>
                 Manage Orders
