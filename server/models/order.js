@@ -15,6 +15,10 @@ const OrderSchema = new Schema({
     type: Number,
     default: 0
   },
+  address: {
+    type: Schema.Types.ObjectId,
+    ref: 'Address'
+  },
   updated: Date,
   created: {
     type: Date,
