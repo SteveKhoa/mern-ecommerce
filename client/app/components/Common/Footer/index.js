@@ -65,30 +65,10 @@ const Footer = () => {
           </div>
         </div>
         <div className='footer-copyright'>
-          <span>© {new Date().getFullYear()} MERN Store</span>
+          <span>© {new Date().getFullYear()} Dalat Organics.</span>
+          <br/>
+          <span>🥬❤️ Fresh love from The Central Highlands, Vietnam. ❤️🥬</span>
         </div>
-        <ul className='footer-social-item'>
-          <li>
-            <a href='/#facebook' rel='noreferrer noopener' target='_blank'>
-              <span className='facebook-icon' />
-            </a>
-          </li>
-          <li>
-            <a href='/#instagram' rel='noreferrer noopener' target='_blank'>
-              <span className='instagram-icon' />
-            </a>
-          </li>
-          <li>
-            <a href='/#pinterest' rel='noreferrer noopener' target='_blank'>
-              <span className='pinterest-icon' />
-            </a>
-          </li>
-          <li>
-            <a href='/#twitter' rel='noreferrer noopener' target='_blank'>
-              <span className='twitter-icon' />
-            </a>
-          </li>
-        </ul>
       </Container>
     </footer>
   );
