@@ -16,9 +16,9 @@ import {
 const SocialShare = props => {
   const { product } = props;
 
-  const shareMsg = `I ♥ ${
+  const shareMsg = `Recently bought ${
     product.name
-  } product on Mern Store!  Here's the link, ${
+  } product on Dalat Organics! Amazed by its freshness!, take a look: ${
     window.location.protocol !== 'https' ? 'http' : 'https'
   }://${window.location.host}/product/${product.slug}`;
 
