@@ -40,3 +40,15 @@ export const EMAIL_PROVIDER = {
   Google: 'Google',
   Facebook: 'Facebook'
 };
+
+export const PAYMENT_STATUS = {
+  Pending: 'Pending',
+  Completed: 'Completed',
+  Failed: 'Failed'
+};
+
+export const PAYMENT_METHOD = {
+  Cash: 'Cash',
+  Bank_Transfer: 'Bank Transfer',
+  Credit_Card: 'Credit Card'
+};

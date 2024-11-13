@@ -30,4 +30,16 @@ exports.EMAIL_PROVIDER = {
   Facebook: 'Facebook'
 };
 
+exports.PAYMENT_STATUS = {
+  Pending: 'Pending',
+  Completed: 'Completed',
+  Failed: 'Failed'
+};
+
+exports.PAYMENT_METHOD = {
+  Cash: 'Cash',
+  Bank_Transfer: 'Bank Transfer',
+  Credit_Card: 'Credit Card'
+};
+
 exports.JWT_COOKIE = 'x-jwt-cookie';
