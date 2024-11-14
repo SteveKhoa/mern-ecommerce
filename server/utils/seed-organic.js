@@ -28,6 +28,13 @@ const seedDB = async (vegetablesjson) => {
 
     const mockUsers = [
       {
+        email: "admin@gmail.com",
+        password: "admingmail",
+        firstName: "admin",
+        lastName: "admin",
+        role: ROLES.Admin
+      },
+      {
         email: "admin@admin.com",
         password: "admin",
         firstName: "admin",
@@ -127,7 +134,7 @@ const seedDB = async (vegetablesjson) => {
           imageUrl: vegetablesBaseUrl.concat(vegetable.img),
           description: vegetable.description,
           quantity: faker.number.int({ min: 1, max: 100 }),
-          price: faker.commerce.price(),
+          price: vegetable.cost,
           taxable: faker.datatype.boolean(),
           isActive: true,
           brand: brands[faker.number.int(brands.length - 1)]._id,
