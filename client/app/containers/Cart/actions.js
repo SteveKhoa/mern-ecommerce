@@ -26,6 +26,7 @@ import { API_URL, CART_ID, CART_ITEMS, CART_TOTAL } from '../../constants';
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
 import { toggleCart } from '../Navigation/actions';
+import { confirmPayment } from '../PaymentPage/actions';
 
 // Handle Add To Cart
 export const handleAddToCart = product => {

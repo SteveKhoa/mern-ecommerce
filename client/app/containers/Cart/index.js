@@ -8,6 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
+import { handlePayment } from './actions';
 
 import CartList from '../../components/Store/CartList';
 import CartSummary from '../../components/Store/CartSummary';
@@ -28,6 +29,7 @@ class Cart extends React.PureComponent {
       placeOrder,
       authenticated
     } = this.props;
+
 
     return (
       <div className='cart'>
@@ -77,7 +79,7 @@ const mapStateToProps = state => {
     isCartOpen: state.navigation.isCartOpen,
     cartItems: state.cart.cartItems,
     cartTotal: state.cart.cartTotal,
-    authenticated: state.authentication.authenticated
+    authenticated: state.authentication.authenticated 
   };
 };
 
