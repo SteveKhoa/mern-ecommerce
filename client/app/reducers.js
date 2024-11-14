@@ -34,6 +34,8 @@ import orderReducer from './containers/Order/reducer';
 import reviewReducer from './containers/Review/reducer';
 import wishListReducer from './containers/WishList/reducer';
 
+import paymentReducer from './containers/PaymentPage/reducer';
+
 const createReducer = history =>
   combineReducers({
     router: connectRouter(history),
@@ -61,7 +63,8 @@ const createReducer = history =>
     contact: contactReducer,
     order: orderReducer,
     review: reviewReducer,
-    wishlist: wishListReducer
+    wishlist: wishListReducer,
+    payment: paymentReducer
   });
 
 export default createReducer;
