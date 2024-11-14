@@ -1,10 +1,14 @@
 const router = require('express').Router();
+const auth = require('../../middleware/auth');
 const Payment = require('../../models/payment');
 
-router.post('/', async (req, res) => {
-  const { userId, orderId, amount, status, method } = req.body;
-  const payment = new Payment({ userId, orderId, amount, status, method });
+router.post('/add', auth, async (req, res) => {
+  const { orderId, amount, method } = req.body;
+  const userId = req.user._id;
+
+  const payment = new Payment({ userId, orderId, amount, method });
   await payment.save((err, data ) => {
+    console.log(err);
     if (err) {
       return res.status(400).json({ error: 'Your request could not be processed. Please try again.' });
     }

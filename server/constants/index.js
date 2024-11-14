@@ -38,8 +38,8 @@ exports.PAYMENT_STATUS = {
 
 exports.PAYMENT_METHOD = {
   Cash: 'Cash',
-  Bank_Transfer: 'Bank Transfer',
-  Credit_Card: 'Credit Card'
+  Bank_Transfer: 'Bank_Transfer',
+  Credit_Card: 'Credit_Card'
 };
 
 exports.JWT_COOKIE = 'x-jwt-cookie';
