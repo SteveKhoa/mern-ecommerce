@@ -58,7 +58,7 @@ router.post('/add', auth, async (req, res) => {
       created: orderDoc.created,
       user: orderDoc.user,
       total: orderDoc.total,
-      products: cartDoc.products
+      products: cartDoc.product
     };
 
     await mailgun.sendEmail(order.user.email, 'order-confirmation', newOrder);
@@ -74,7 +74,6 @@ router.post('/add', auth, async (req, res) => {
     if (error instanceof ReferenceError) {
       errResponse = "You has no delivery address available.\nPlease add an address first.";
     }
-    console.log(error)
     res.status(400).json({
       error: errResponse
     });
