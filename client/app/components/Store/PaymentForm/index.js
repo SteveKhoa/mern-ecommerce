@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { PAYMENT_METHOD } from '../../../constants';
 
-const PaymentForm = ({ items = [], total = 0, onSubmit }) => {
+const PaymentForm = ({ items = [], total = 0, onSubmit, cancelPayment }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    address: '',
-    city: '',
-    zipCode: '',
     paymentMethod: 'Credit_Card',
   });
 
@@ -84,48 +81,6 @@ const PaymentForm = ({ items = [], total = 0, onSubmit }) => {
               </div>
             </div>
 
-            {/* Address */}
-            <div className="card mb-4">
-              <div className="card-body">
-                <h5 className="card-title mb-4">Shipping Address</h5>
-                <div className="row">
-                  <div className="col-12 mb-3">
-                    <label>Address</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label>City</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label>ZIP Code</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="zipCode"
-                      value={formData.zipCode}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Payment Method */}
             <div className="card">
               <div className="card-body">
@@ -178,8 +133,17 @@ const PaymentForm = ({ items = [], total = 0, onSubmit }) => {
                   className="btn btn-primary btn-block"
                   form="payment-form"
                   type="submit"
+                  style={{backgroundColor: '#28a745', borderColor: '#28a745', color: '#FFFFFF'}}
                 >
                   <i className="fa fa-check"></i> Confirm Payment
+                </button>
+                <button
+                  className="btn btn-secondary btn-block"
+                  onClick={cancelPayment}
+                  type="button"
+                  style={{backgroundColor: '#dc3545', borderColor: '#dc3545', color: '#FFFFFF'}}
+                >
+                  <i className="fa fa-times"></i> Cancel Payment
                 </button>
               </div>
             </div>

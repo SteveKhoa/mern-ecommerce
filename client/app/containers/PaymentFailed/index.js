@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaTimesCircle } from 'react-icons/fa';
+//import { FaTimesCircle } from 'react-icons/fa';
 
 const PaymentFailed = () => {
   const errorInfo = {
@@ -13,7 +13,7 @@ const PaymentFailed = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
     {/* Error Message */}
       <div className="text-center mb-6 sm:mb-8">
-        <FaTimesCircle className="text-red-500 text-5xl sm:text-6xl mb-3 sm:mb-4 mx-auto" />
+        {/*<FaTimesCircle className="text-red-500 text-5xl sm:text-8xl mb-3 sm:mb-4 mx-auto" />*/}
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800">
           Payment Failed
         </h1>

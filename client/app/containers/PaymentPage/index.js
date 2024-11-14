@@ -1,18 +1,18 @@
 /**
  *
- * YourNewPage
+ * PaymentPage
  *
  */
 
 import React from 'react';
 import { connect } from 'react-redux';
-import actions from '../../actions';
 import PaymentForm from '../../components/Store/PaymentForm';
+import actions from '../../actions';
 
-// Import your components here
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+//import LoadingIndicator from '../../components/Common/LoadingIndicator';
 
-class YourNewPage extends React.PureComponent {
+
+class PaymentPage extends React.PureComponent {
   componentDidMount() {
     // Initial data fetching
   }
@@ -22,18 +22,12 @@ class YourNewPage extends React.PureComponent {
   }
 
   render() {
-    const { isLoading } = this.props;
-
+    const { cartItems, cartTotal, cartId, confirmPayment, cancelPayment } = this.props;
     return (
-      <div className='your-new-page'>
-        {isLoading ? (
-          <LoadingIndicator backdrop />
-        ) : (
-          // Your main content here
-          <div>
-            <PaymentForm />
-          </div>
-        )}
+      <div className='payment-page'>
+        <div>
+          <PaymentForm items={cartItems} total={cartTotal} onSubmit={confirmPayment} cartId={cartId} cancelPayment={cancelPayment} />
+        </div>
       </div>
     );
   }
@@ -42,7 +36,11 @@ class YourNewPage extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     // Your state mappings here
+    //isLoading: state.loading.isLoading
+    cartItems: state.cart.cartItems,
+    cartTotal: state.cart.cartTotal,
+    cartId: state.cart.cartId
   };
 };
 
-export default connect(mapStateToProps, actions)(YourNewPage);
+export default connect(mapStateToProps, actions)(PaymentPage);

@@ -22,6 +22,7 @@ import { clearCart, getCartId } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
 import { API_URL } from '../../constants';
+import { handlePayment } from '../PaymentPage/actions';
 
 export const updateOrderStatus = value => {
   return {
@@ -195,7 +196,7 @@ export const updateOrderItemStatus = (itemId, status) => {
   };
 };
 
-export const addOrder = () => {
+export const addOrder = (formData) => {
   return async (dispatch, getState) => {
     try {
       const cartId = localStorage.getItem('cart_id');
@@ -206,7 +207,11 @@ export const addOrder = () => {
           cartId,
           total
         });
-
+        const response2 = await axios.post(`${API_URL}/payment/add`, {
+          orderId: response.data.order._id,
+          amount: total,
+          method: formData.paymentMethod
+        });
         dispatch(push(`/order/success/${response.data.order._id}`));
         dispatch(clearCart());
       }
@@ -224,7 +229,7 @@ export const placeOrder = () => {
 
     if (token && cartItems.length > 0) {
       Promise.all([dispatch(getCartId())]).then(() => {
-        dispatch(addOrder());
+        dispatch(handlePayment());
       });
     }
 
